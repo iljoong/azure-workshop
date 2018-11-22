@@ -8,7 +8,7 @@ A sample cloud-native architecture on Azure.
 
 ![architecture](./terraform_azure3.png)
 
-In this lab, you will create a service with n-tier architecture and you will use `terraform` to create followings Azure resources:
+In this lab, you will create a service with n-tier architecture and you will use `terraform` to create following Azure resources:
 
 - Virtual network and subnet
 - VMs (web, app, nat, jumphost)

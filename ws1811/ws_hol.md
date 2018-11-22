@@ -7,9 +7,9 @@ Open azure cloud shell, `https://shell.azure.com`
 > For reference please refer [Install and confiure](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/terraform-install-configure) and
 > [Quick sample: create a VM](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/terraform-create-complete-vm)
 
-### 1. Download azure-terraform sample code
+### 1. Download azure-terraform sample
 
-Download sample.
+Download the sample.
 
 ```
 git clone https://github.com/iljoong/azure-terraform
@@ -44,6 +44,8 @@ Sample output of service principal information is following,
 ### 3. Update variables value
 
 Update variables value with _"add_here"_ in `variable.tf`, such as appId, password and etc.
+
+Note that be sure `prefix` variable is _globally uniquey_ and use _complex_ `password`.
 
 > You could also change some variables in `vm-app.tf`, `vm-web.tf` and etc.
 
@@ -95,9 +97,9 @@ Note that curl `10.0.2.4` is not responding due security configuration by ASG.
 
 ### 8. Test app host in web host
 
-At jumphost, login to one of web host (10.0.1.4).
+At jumphost, login to a web host (10.0.1.4).
 
-ping test following.
+run ping test again.
 
 ```
 curl 10.0.2.4
@@ -107,7 +109,7 @@ This time it will work since ASG configured so that it allows traffic from web t
 
 ### 8. Test SNAT
 
-Logout from webserver then login to app server (10.0.2.4) and test following,
+Logout from webserver then login to a app server (10.0.2.4) and test following,
 
 ```
 curl ipinfo.io
@@ -166,9 +168,9 @@ Then, run `ntier` sample.
 ansible-playbook -i hosts site.yaml
 ```
 
-Note that you need to update variables in `ntier/group_vars/all` before run this sample.
+Note that you need to update variables (_user, password, blobname_) in `ntier/group_vars/all` before run this sample.
 
-> If you skipped login to web and app hosts then playbook will fail so you should login to host before run this script.
+> If you skipped login to web and app hosts then playbook will fail so you should login to host before running this script.
 
 ### 5.  Browse to web again
 
@@ -193,7 +195,7 @@ You will see an error page. This is because you don't have a token to access the
 Enable or assign MSI identity on the application VMs.
 
 ```
-az vm identity assign -g <rgname> -rg -n <appvm01>
+az vm identity assign -g <rgname> -n <appvm01>
 ```
 
 You can also do this in portal.
@@ -226,7 +228,7 @@ Now you will see the content of 'hello.txt' file in the blob storage.
 
 ![ansbile1](./ws-ansible3.png)
 
-### 5 Download and upload test
+### 5. Download and upload test
 
 _This is optional_
 
