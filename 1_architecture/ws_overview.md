@@ -1,4 +1,4 @@
-# Azure Workshop: Cloud Architecture
+# Azure Workshop: Cloud Native Architecture
 
 ## Overview
 
