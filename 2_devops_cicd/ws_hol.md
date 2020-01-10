@@ -1,5 +1,3 @@
-_DRAFT_
-
 # Azure Workshop: DevOps in Practice
 
 > Please refer sample devops template [https://github.com/iljoong/azure-devops](https://github.com/iljoong/azure-devops)
