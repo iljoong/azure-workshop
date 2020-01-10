@@ -1,4 +1,4 @@
-﻿# Azure Workshop: Design and Deploy Cloud N-Tier App
+# Azure Workshop: Design and Deploy Cloud N-Tier App
 
 ## LAB1: Provision infrastructure using Terraform
 
