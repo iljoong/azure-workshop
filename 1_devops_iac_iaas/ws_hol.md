@@ -1,4 +1,4 @@
-﻿# Azure Workshop: Cloud Native Architecture
+﻿# Azure Workshop: Design and Deploy Cloud N-Tier App
 
 ## LAB1: Provision infrastructure using Terraform
 
@@ -18,6 +18,8 @@ cd azure-terraform
 ```
 
 ### 2. Create a service principal
+
+> You don't need to create SP if you're using Azure CLI environment, such as _Azure Shell_. See [Authenticating using the Azure CLI](https://www.terraform.io/docs/providers/azurerm/auth/azure_cli.html) for more information
 
 Create a Azure AD service principal using CLI.
 

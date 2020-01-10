@@ -1,5 +1,3 @@
-_DRAFT_
-
 # Azure Workshop: DevOps in Practice
 
 ## Overview
