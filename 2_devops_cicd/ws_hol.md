@@ -9,7 +9,7 @@ _DRAFT_
 1. prepare azure environment
     - Azure DevOps
     - Virtual Network
-    - KeyVault
+    - Key Vault
     - Blob account
 2. create `adminpassword` secret and upload _SSL certificate_ to your keyvault 
 3. upload files in [azure/blob](https://github.com/iljoong/azure-devops/tree/master/azure/blob) to blob account and update variables
@@ -17,7 +17,8 @@ _DRAFT_
     - provision a Window VM for build agent
     - install devops agent software on build agent
 
-> Note that this lab will use a _self-hosted agent_ to build and release pipeline. For more information, please refer [Self-hosted Windows agents](https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/v2-windows?view=azure-devops)
+> __Note 1:__ This lab will use a _self-hosted agent_ to build and release pipeline. For more information, please refer [Self-hosted Windows agents](https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/v2-windows?view=azure-devops).<br>
+__Note 2:__ If you don't have your own SSL certificate then you can generate a [self-signed certificate in Key Vault](https://docs.microsoft.com/en-us/azure/key-vault/create-certificate)
 
 ## LAB1: Create a Project and test deployment
 
@@ -48,7 +49,7 @@ dotnet new webapi -o apiapp -n apiapp
 1. create a new project in __Azure DevOps__
 2. push app source to the project reop
 3. create a build pipeline
-    - use _classic_ mode to create a new pipeline and import [build-pipelines.yml](https://github.com/iljoong/azure-devops/blob/master/build-pipelines.yml)
+    - create a new pipeline and import [build-pipelines.yml](https://github.com/iljoong/azure-devops/blob/master/build-pipelines.yml)
     - update with `agent pool` name
 4. add __group variables__ and please refer variables in [variables.yml](https://github.com/iljoong/azure-devops/blob/master/variables.yml)
     - azure_subscription
@@ -69,7 +70,7 @@ dotnet new webapi -o apiapp -n apiapp
     - choose `Linked artifact` in Template location and update `template`, `template parameters`
 5. add following override template parameters
    ```
-    -imageId "/subscriptions/$(subscription_id)/resourceGroups/$(sig_rg)/providers/Microsoft.Compute/galleries/$(sig_name)/images/$(sig_prefix)-$(Build.BuildId)/versions/1.0.$(Build.BuildId)" -vmssName "$(prodvmss)" -vmSku "$(vmSku)" -instanceCount "1" -vnetname "$(vnetname)" -subnetname "$(subnetname)" -subnet "$(subnet)" -adminUsername "$(adminUsername)" -certificateUrl "$(certificateurl)" -scriptUrl "$(scripturl)" -appsettingsUrl "$(appsettingsurl)" -thumbprint "$(thumbprint)" -identityName "$(identityName)"
+    -vmssName $(vmssName) -vmSku "Standard_D2s_v3" -instanceCount 1 -vnetname $(vnetname) -subnetname $(subnetname) -ilbip $(ilbip) -subnet $(subnet) -adminUsername $(adminUsername) -imageId "/subscriptions/$(subscription_id)/resourceGroups/$(sig_rg)/providers/Microsoft.Compute/galleries/$(sig_name)/images/$(sig_prefix)-$(Build.BuildId)/versions/1.0.$(Build.BuildId)" -vaultResourceId $(vaultid) -certificateUrl $(certificateurl) -winrmCertUrl $(winrmCertUrl) -scriptUrl $(scripturl) -appsettingsUrl $(appsettingsurl) -thumbprint $(thumbprint) -identityName $(identityName)
    ```
 6. add an artifact
     - add build artifact
@@ -87,10 +88,19 @@ _this is optional_
 1. create a new release pipeline ([upgrade-pipeline](https://github.com/iljoong/azure-devops/blob/master/azure/release_sample/upgrade-pipelines.yml)) and choose `empty job`
 2. create a stage and name it `Upgrade certificate`
 3. assign agent pool to your agent VM for this job
-4. create a __Azure CLI__ task
+4. create two __Azure CLI__ tasks
 5. select `Inline script` in `Script Location` and add following script in `Inline Script`
    ```
-   az vmss update -g $(rgname) -n $(prodvmss) --set virtualMachineProfile.osProfile.secrets[0].vaultCertificates[0].certificateUrl="$(certificateurl)" --set virtualMachineProfile.extensionProfile.extensions[0].settings="{""fileUris"": [""$(scripturl)"", ""$(appsettingsurl)""],""commandToExecute"": ""powershell -ExecutionPolicy Unrestricted -File $(scriptfile) -thumbprint $(thumbprint)""}"
+    az vmss update -g $(rgname) -n $(vmssName) --add virtualMachineProfile.osProfile.secrets[0].vaultCertificates "{""certificateUrl"": ""$(certificateurl)"", ""certificateStore"": ""My""}"
+   ```
+   - add another script in `Inline Script`
+   ```
+    az vmss update -g $(rgname) -n $(vmssName) --set virtualMachineProfile.extensionProfile.extensions[0].settings="{""fileUris"": [""$(scripturl)"", ""$(appsettingsurl)""],""commandToExecute"": ""powershell -ExecutionPolicy Unrestricted -File $(scriptfile) -thumbprint $(thumbprint)""}"
    ```
 6. link variable groups (`azure_subscription`, `azure_build`, `azure_vmss`) to release pipeline
 
+## Additional Lab
+
+There is additional lab about working with `work item`, `branching` and `pull requests`.
+
+[Additional HoL](./ws_hol_extra.md)
