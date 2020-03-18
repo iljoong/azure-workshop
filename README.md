@@ -10,6 +10,8 @@
 
 4. DevOps CI/CD: [Deployment Strategy](./4_devops_strategy/README.md)
 
+5. Mobile DevOps: [Mobile DevOps with App Center](./5_mobile_devops/README.md)
+
 ## External Workshop
 
 1. [Azure DevOps Hands-on Lab](https://www.azuredevopslabs.com/)
