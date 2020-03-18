@@ -16,12 +16,8 @@ You can also practice `git` fundamentals with this environment.
 
 ## Prerequisite
 
-It is recommended to provision following Azure services.
-
-- Azure DevOps and Agent VM
-- Virtual network and subnet
-- Azure keyvault
-- Blob storage
+- Azure DevOps account
+- Azure Subscription (Owner)
 
 ## Hands on Lab
 

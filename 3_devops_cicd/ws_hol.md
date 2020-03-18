@@ -47,9 +47,9 @@ dotnet new webapi -o apiapp -n apiapp
 1. create a new project in __Azure DevOps__
 2. push app source to the project reop
 3. create a build pipeline
-    - create a new pipeline and import [build-pipelines.yml](https://github.com/iljoong/azure-devops/blob/master/build-pipelines.yml)
+    - create a new pipeline and import [build-pipelines.yml](https://github.com/iljoong/azure-devops/blob/master/pipeline/build-pipelines.yml)
     - update with `agent pool` name
-4. add __group variables__ and please refer variables in [variables.yml](https://github.com/iljoong/azure-devops/blob/master/variables.yml)
+4. add __group variables__ and please refer variables in [variables.yml](https://github.com/iljoong/azure-devops/blob/master/pipeline/variables.yml)
     - azure_subscription
     - azure_build
     - azure_vmss
@@ -61,7 +61,7 @@ dotnet new webapi -o apiapp -n apiapp
 
 ![Release Pipeline](./release-pipeline.png)
 
-1. create a new release pipeline ([release-pipeline](https://github.com/iljoong/azure-devops/blob/master/azure/release_sample/release-pipelines.yml)) and choose `empty job`
+1. create a new release pipeline (refer sample [release-pipeline](https://github.com/iljoong/azure-devops/blob/master/pipeline/release-pipeline-sample.yml)) and choose `empty job`
 2. create a stage and name it `Deploy to VMSS`
 3. assign agent pool to your agent VM for this job
 4. create a _Azure resource group deployment_ task
@@ -83,7 +83,7 @@ Manually trigger build and release
 
 _this is optional_
 
-1. create a new release pipeline ([upgrade-pipeline](https://github.com/iljoong/azure-devops/blob/master/azure/release_sample/upgrade-pipelines.yml)) and choose `empty job`
+1. create a new release pipeline ([upgrade-pipeline](https://github.com/iljoong/azure-devops/blob/master/pipeline/upgrade-pipeline-sample.yml)) and choose `empty job`
 2. create a stage and name it `Upgrade certificate`
 3. assign agent pool to your agent VM for this job
 4. create two __Azure CLI__ tasks
