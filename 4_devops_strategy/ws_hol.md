@@ -10,12 +10,12 @@ In this lab, you'll create a multi-stage deployment for n-tier application.
 
 There are several deployment strategies such as All-at-once(Big bang), Rolling, Blue/Green(Red/Black) and Canary. Each strategy has pros and cons and you must choose the right strategy for your service.
 
-Strategy        | Deploy time | Zero Downtime | Rollback Process
-----------------------------------------------------------------
-All at once     | fast        | X             | Re-deploy
-Rolling         | slow+       | O             | Re-deploy
-Blue/Green      | slow        | O             | VIP/URL swap (fast)   
-Canary          | slow++      | O             | Re-deploy   
+| Strategy        | Deploy time | Zero Downtime | Rollback Process   |
+|-----------------|:-----------:|:-------------:|--------------------|
+| All at once     | fast        | X             | Re-deploy          |
+| Rolling         | slow+       | O             | Re-deploy          |
+| Blue/Green      | slow        | O             | VIP/URL swap (fast)|  
+| Canary          | slow++      | O             | Re-deploy          |
 
 Please read this [link](https://dev.to/mostlyjason/intro-to-deployment-strategies-blue-green-canary-and-more-3a3) for more information.
 
@@ -165,7 +165,7 @@ You'll setup 3 stages:
 
 Run [terraform scripts](https://github.com/iljoong/vmss-vipswap/tree/master/terraform) for initial VMSS deployment. This terraform script will setup a VMSS environment for blue/green deployment.
 
-You can deploy one of LB options by choosing source module in `main.tf`
+You can deploy one of LB options by choosing source module in [main.tf](https://raw.githubusercontent.com/iljoong/vmss-vipswap/master/terraform/main.tf)
 
 - [Application G/W]
 - [Public LB]
@@ -269,7 +269,7 @@ If you want to receive a pipeline notification from one of popular messaging app
 Slack: https://docs.microsoft.com/en-us/azure/devops/pipelines/integrations/slack?view=azure-devops
 Teams: https://docs.microsoft.com/en-us/azure/devops/pipelines/integrations/microsoft-teams?view=azure-devops
 
-### LAB4: Create multi-stage pipeline with YAML file (Preview Feature)
+## LAB4: Create multi-stage pipeline with YAML file (Preview Feature)
 
 _this is optional_
 

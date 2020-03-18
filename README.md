@@ -14,4 +14,4 @@
 
 1. [Azure DevOps Hands-on Lab](https://www.azuredevopslabs.com/)
 
-2. [Azure Governace Workshop](https://github.com/faridabharmal/AzureGovernance)
+2. [Azure Governance Workshop](https://github.com/faridabharmal/AzureGovernance)
