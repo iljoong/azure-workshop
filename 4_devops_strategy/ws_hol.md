@@ -45,7 +45,7 @@ In order to VIP-swap for VMSS with public/internal LB you need to configure two 
 
 You also need to modify your app so that it returns right response depends on the LB rule (http probe). That is, application's `api/ping` endpoint returns 200 or 404 depends on its matching slot with probe. Slot name is part of VMSS's name (e.g., `prod-api-vmss-slot0` or `prod-api-vmss-slot1`). Application uses IMDS to get it's VMSS's name and slot name.
 
-```
+```cs
     [HttpGet("/api/ping")]
     public ActionResult Ping([FromQuery]string slot)
     {
@@ -77,7 +77,7 @@ When building Windows image, if the application file size is large, say 100 MB, 
 
 You can improve build time by copying build artifacts to blob storage temporary and downloading from blob in the build process. You'll need to modify build process by adding a task that upload a package and generate temporal sas url, `packageurl`.
 
-```
+```yaml
 - task: AzureCLI@2
   inputs:
     azureSubscription: 'MyAzure_Subscription'
@@ -184,7 +184,7 @@ Setup Azure CLI (version 2.*) task
 ![pipeline task](./images/pipeline_task.jpg)
 
 Inline Script
-```
+```bash
 $m=(az network lb show -g $(vmssrgname) -n $(lbname) --query "tags.ActiveSlot" -o tsv)
 if ($m -eq "0") { $n="1" } else { $n="0" }
 az vmss update -g $(vmssrgname) -n "api-prod-vmss-slot$n" --set "virtualMachineProfile.storageProfile.imageReference.id=/subscriptions/$(subscription_id)/resourceGroups/$(rgname)/providers/Microsoft.Compute/images/app$(Build.BuildId)"
@@ -197,7 +197,7 @@ Setup Azure CLI (version 2.*) task
 ![pipeline task](./images/pipeline_task.jpg)
 
 Inline Script
-```
+```bash
 # vip swap
 $m=(az network lb show -g $(vmssrgname) -n $(lbname) --query "tags.ActiveSlot" -o tsv)
 if ($m -eq "0") { $n="1" } else { $n="0" }
@@ -219,7 +219,7 @@ Setup Azure CLI (version 2.*) task
 ![pipeline task](./images/pipeline_task.jpg)
 
 Inline Script
-```
+```bash
 $id = (az network application-gateway address-pool show -g $(vmssrgname) --gateway-name $(appgwname) -n slot0 --query "backendIpConfigurations[0].id" -o tsv)
 $m = $id.Split("/")[-1][-1] # get slot number only
 if ($m -eq "0") { $n = "1" } else { $n = "0" }
@@ -237,7 +237,7 @@ Setup Azure CLI (version 2.*) task
 ![pipeline task](./images/pipeline_task.jpg)
 
 Inline Script
-```
+```bash
 $slot0 = "/subscriptions/$(subscription_id)/resourceGroups/$(vmssrgname)/providers/Microsoft.Network/applicationGateways/$(appgwname)/backendAddressPools/slot0"
 $slot1 = "/subscriptions/$(subscription_id)/resourceGroups/$(vmssrgname)/providers/Microsoft.Network/applicationGateways/$(appgwname)/backendAddressPools/slot1"
 
