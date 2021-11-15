@@ -12,6 +12,8 @@
 
 5. Mobile DevOps: [Mobile DevOps with App Center](./5_mobile_devops/README.md)
 
+6. App Modernization: [Container-based Application HoL](https://github.com/iljoong/msa-dotnetapp)
+
 ## External Workshop
 
 1. [Azure DevOps Hands-on Lab](https://www.azuredevopslabs.com/)
